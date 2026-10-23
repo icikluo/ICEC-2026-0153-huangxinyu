@@ -19,7 +19,7 @@
 - **文档资料文件夹**：人工计时器记录，结束时间 00:04:12.53
 - **检查阶段**：检查三个文件夹后结束计时，人工计时器记录，结束时间 00:04:31.05
 
-> 路径迁移备注（2026-10-23 补记）：以上原始计时数据全部保留当时实测值，未做任何修改。上文的 `D:\AI-lab\ICEC-2026-0153-huangxinyu\...` 是计时当时的真实路径；课题目录已于 10-23 迁移至 `D:\ICEC-2026-0153-huangxinyu\`，原错误路径改名为 `D:\AI-lab-error` 保留（详见 03-AI-Collaboration 排障记录 02）。
+> 路径迁移备注（2026-10-23 补记）：以上原始计时数据全部保留当时实测值，未做任何修改。上文的 `D:\AI-lab\ICEC-2026-0153-huangxinyu\...` 是计时当时的真实路径；课题目录已于 10-23 迁移至 `D:\ICEC-2026-0153-huangxinyu\`，原错误路径改名为 `D:\AI-lab-error` （详见 03-AI-Collaboration 排障记录 02）。
 
 ### 详细计时记录
 
@@ -259,9 +259,7 @@
 
 ## 原始数据备份
 
-**计时器截图：** （如有请附上）  
-**录屏文件：** `01-Field-Discovery/raw_data/timing_video.mp4`  
-**文件快照：** `01-Field-Discovery/raw_data/samples/`
+**计时器截图与录屏文件：** D:\ICEC-2026-0153-huangxinyu\01-Field-Discovery\raw_data\10-task-audit\samples\evidence-task10
 
 ---
 
