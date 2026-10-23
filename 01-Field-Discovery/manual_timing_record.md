@@ -48,31 +48,31 @@
 
 | 序号 | 原文件名 | 目标文件名 | 是否错误 | 错误类型 | 错误描述 |
 |-----|---------|-----------|---------|---------|---------|
-| 1 | main.py | 26 版 code_to001.py | ❌ | 快捷键不熟悉 | 第一次实验，不熟悉笔记本键盘，忘记按 Fn+Fn2 才能触发 F2 重命名快捷键，多次误按 Ctrl+V，导致时间增加 |
-| 2 | utils.py | 26 版 code_to002.py | | | |
+| 1 | api_client.py | 26 版 code_to001.py | ❌ | 快捷键不熟悉 | 第一次实验，不熟悉笔记本键盘，忘记按 Fn+Fn2 才能触发 F2 重命名快捷键，多次误按 Ctrl+V，导致时间增加 |
+| 2 | app.ipynb | 26 版 code_to002.py | | | |
 | 3 | config.py | 26 版 code_to003.py | | | |
-| 4 | test_main.py | 26 版 code_to004.py | | | |
-| 5 | data_processor.py | 26 版 code_to005.py | | | |
-| 6 | api_client.py | 26 版 code_to006.py | | | |
-| 7 | database.py | 26 版 code_to007.py | | | |
-| 8 | models.py | 26 版 code_to008.py | | | |
-| 9 | app.ipynb | 26 版 code_to009.ipynb | | | |
-| 10 | requirements.txt | 26 版 code_to010.txt | | | |
+| 4 | data_processor.py | 26 版 code_to004.py | | | |
+| 5 | database.py | 26 版 code_to005.py | | | |
+| 6 | main.py | 26 版 code_to006.py | | | |
+| 7 | models.py | 26 版 code_to007.py | | | |
+| 8 | requirements.txt | 26 版 code_to008.py | | | |
+| 9 | test_main.py | 26 版 code_to009.ipynb | | | |
+| 10 | utils.py | 26 版 code_to010.txt | | | |
 | **错误数** | | | **1** | | **键盘快捷键不熟悉** |
 
 ### 日常杂物文件夹（10 个文件）
 
 | 序号 | 原文件名 | 目标文件名 | 是否错误 | 错误类型 | 错误描述 |
 |-----|---------|-----------|---------|---------|---------|
-| 1 | vacation_photo.jpg | 2026 日常之 001.jpg | ❌ | 操作失误 | 不小心双击点开文件（本想双击重命名），导致文件被打开，需要关闭后再重命名 |
-| 2 | screenshot.png | 2026 日常之 002.png | | | |
-| 3 | music_playlist.mp3 | 2026 日常之 003.mp3 | | | |
-| 4 | infographic.png | 2026 日常之 004.png | ❌ | 顺序错误 | 先改了第 9 个文件但命名为 001，然后回头改第 4 个，最后改到第 9 个时才把 001 改为 009 |
-| 5 | avatar.jpg | 2026 日常之 005.jpg | | | |
-| 6 | chart.png | 2026 日常之 006.png | | | |
-| 7 | recording.mp3 | 2026 日常之 007.mp3 | | | |
+| 1 | avatar.jpg | 2026 日常之 001.jpg | ❌ | 操作失误 | 不小心双击点开文件（本想双击重命名），导致文件被打开，需要关闭后再重命名 |
+| 2 | chart.png | 2026 日常之 002.png | | | |
+| 3 | infographic.png | 2026 日常之 003.png | | | |
+| 4 | meme.jpg | 2026 日常之 004.jpg | ❌ | 顺序错误 | 先改了第 9 个文件但命名为 001，然后回头改第 4 个，最后改到第 9 个时才把 001 改为 009 |
+| 5 | music_playlist.mp3 | 2026 日常之 005.mp3 | | | |
+| 6 | recording.mp3 | 2026 日常之 006.mp3 | | | |
+| 7 | screenshot.png | 2026 日常之 007.png | | | |
 | 8 | tutorial.mp4 | 2026 日常之 008.mp4 | | | |
-| 9 | meme.jpg | 2026 日常之 009.jpg | ❌ | 编号错误 | 先改成 001，后纠正为 009（与第 4 个错误关联） |
+| 9 | vacation_photo.jpg | 2026 日常之 009.jpg | ❌ | 编号错误 | 先改成 001，后纠正为 009（与第 4 个错误关联） |
 | 10 | video_clip.mp4 | 2026 日常之 010.mp4 | ❌ | 编号错误 | 后缀 010 误写为 0010，发现后纠正回去 |
 | **错误数** | | | **4** | | **误打开 + 顺序错误 + 编号错误** |
 
@@ -80,16 +80,16 @@
 
 | 序号 | 原文件名 | 目标文件名 | 是否错误 | 错误类型 | 错误描述 |
 |-----|---------|-----------|---------|---------|---------|
-| 1 | report_draft.docx | 2026_报告_001.docx | | | |
-| 2 | meeting_notes.docx | 2026_报告_002.docx | | | |
-| 3 | project_plan.pdf | 2026_报告_003.pdf | | | |
-| 4 | budget_2026.xlsx | 2026_报告_004.xlsx | | | |
-| 5 | data_analysis.xlsx | 2026_报告_005.xlsx | | | |
-| 6 | thesis_outline.docx | 2026_报告_006.docx | | | |
-| 7 | presentation.pptx | 2026_报告_007.pptx | | | |
+| 1 | assignment.docx | 2026_报告_001.docx | | | |
+| 2 | budget_2026.xlsx | 2026_报告_002.docx | | | |
+| 3 | certificate.pdf | 2026_报告_003.pdf | | | |
+| 4 | data_analysis.xlsx | 2026_报告_004.xlsx | | | |
+| 5 | meeting_notes.docx | 2026_报告_005.xlsx | | | |
+| 6 | presentation.pptx | 2026_报告_006.docx | | | |
+| 7 | project_plan.pdf | 2026_报告_007.pptx | | | |
 | 8 | reading_notes.pdf | 2026_报告_008.pdf | | | |
-| 9 | assignment.docx | 2026_报告_009.docx | | | |
-| 10 | certificate.pdf | 2026_报告_010.pdf | | | |
+| 9 | report_draft.docx | 2026_报告_009.docx | | | |
+| 10 | thesis_outline.docx | 2026_报告_010.pdf | | | |
 | **错误数** | | | **0** | | |
 
 ### 错误汇总

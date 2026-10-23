@@ -43,16 +43,16 @@
 
 | 序号 | 原始文件名 | 扩展名 | 重命名目标 |
 |-----|-----------|-------|-----------|
-| 1 | vacation_photo.jpg | .jpg | 2026 日常之 001.jpg |
-| 2 | screenshot.png | .png | 2026 日常之 002.png |
-| 3 | music_playlist.mp3 | .mp3 | 2026 日常之 003.mp3 |
-| 4 | video_clip.mp4 | .mp4 | 2026 日常之 004.mp4 |
-| 5 | avatar.jpg | .jpg | 2026 日常之 005.jpg |
-| 6 | infographic.png | .png | 2026 日常之 006.png |
-| 7 | recording.mp3 | .mp3 | 2026 日常之 007.mp3 |
+| 1 | avatar.jpg | .jpg | 2026 日常之 001.jpg |
+| 2 | chart.png | .png | 2026 日常之 002.png |
+| 3 | infographic.png | .png | 2026 日常之 003.png |
+| 4 | meme.jpg | .jpg | 2026 日常之 004.jpg |
+| 5 | music_playlist.mp3 | .mp3 | 2026 日常之 005.mp3 |
+| 6 | recording.mp3 | .mp3 | 2026 日常之 006.mp3 |
+| 7 | screenshot.png | .png | 2026 日常之 007.png |
 | 8 | tutorial.mp4 | .mp4 | 2026 日常之 008.mp4 |
-| 9 | meme.jpg | .jpg | 2026 日常之 009.jpg |
-| 10 | chart.png | .png | 2026 日常之 010.png |
+| 9 | vacation_photo.jpg | .jpg | 2026 日常之 009.jpg |
+| 10 | video_clip.mp4 | .mp4 | 2026 日常之 010.mp4 |
 
 ---
 
