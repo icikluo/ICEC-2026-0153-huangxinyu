@@ -139,6 +139,8 @@ type 代码备份\rename_log.txt
 type 日常杂物\rename_log.txt
 ```
 
+> 路径迁移备注（2026-10-23 补记）：上方命令保留方案当时的原始写法。课题目录已于 10-23 迁移至 `D:\ICEC-2026-0153-huangxinyu\`，原错误路径 `D:\AI-lab\...` 已不存在；现在实际操作请将 `cd` 路径换成 `D:\ICEC-2026-0153-huangxinyu\01-Field-Discovery\ai_scripts`（详见 03-AI-Collaboration 排障记录 02）。
+
 ### 5.3 时间记录表（待填充）
 
 | 阶段 | 开始时间 | 结束时间 | 耗时（秒） |
