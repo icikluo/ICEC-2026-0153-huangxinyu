@@ -248,7 +248,6 @@ AI 总耗时 = Prompt 编写 + 脚本生成 + 调试 + 执行 + 校验
 ├── topic10_plan.md                    # 本方案文档
 ├── manual_timing_record.md            # 人工操作计时记录 ✅ 已完成
 ├── human_ai_validation_rules.md       # 人机校验规则 ✅ 已完成
-├── analysis_report_framework.md       # 分析报告框架 ✅ 已完成
 ├── data_comparison_table.md           # 数据对比表 ✅ 已完成
 │
 ├── raw_data/
@@ -281,7 +280,7 @@ AI 总耗时 = Prompt 编写 + 脚本生成 + 调试 + 执行 + 校验
 | topic10_plan.md | ✅ 已完成 | 本方案文档 |
 | manual_timing_record.md | ✅ 已完成 | 人工操作完整记录 |
 | human_ai_validation_rules.md | ✅ 已完成 | 校验规则和清单 |
-| analysis_report_framework.md | ✅ 已完成 | 报告框架 |
+| reports/topic10_final_report.md | ✅ 已完成 | 最终分析报告（正式交付版） |
 | batch_rename.py | ✅ 已运行 | AI 生成的脚本（已实跑，30/30 改名成功，命名规则有 20 个不符） |
 | create_test_files.py | ✅ 已完成 | 样本生成脚本（30 个占位文件） |
 | data_comparison_table.md | ✅ 已完成 | 人机对比数据表（耗时与错误数已填） |
@@ -358,7 +357,7 @@ git push
 
 - 📄 `manual_timing_record.md` - 人工操作完整记录
 - 📄 `human_ai_validation_rules.md` - 校验规则和清单
-- 📄 `analysis_report_framework.md` - 最终报告框架
+- 📄 `reports/topic10_final_report.md` - 最终分析报告（正式交付版）
 - 📄 `phase1-plan.md` - 第一阶段整体计划（含课题 03 和课题 10）
 
 ---
