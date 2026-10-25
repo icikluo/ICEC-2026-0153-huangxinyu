@@ -1,0 +1,47 @@
+{
+  "timestamp": "20261025_182807",
+  "base_dir": "D:\\ICEC-2026-0153-huangxinyu\\01-Field-Discovery\\raw_data\\10-task-audit\\ai\\run_ai_20261025-173712",
+  "folders": {
+    "文档资料": "2026_报告_{:03d}",
+    "代码备份": "26 版 code_to{:03d}",
+    "日常杂物": "2026 日常之{:03d}"
+  },
+  "rename_maps": {
+    "文档资料": {
+      "assignment.docx": "2026_报告_001.docx",
+      "budget_2026.xlsx": "2026_报告_002.xlsx",
+      "certificate.pdf": "2026_报告_003.pdf",
+      "data_analysis.xlsx": "2026_报告_004.xlsx",
+      "meeting_notes.docx": "2026_报告_005.docx",
+      "presentation.pptx": "2026_报告_006.pptx",
+      "project_plan.pdf": "2026_报告_007.pdf",
+      "reading_notes.pdf": "2026_报告_008.pdf",
+      "report_draft.docx": "2026_报告_009.docx",
+      "thesis_outline.docx": "2026_报告_010.docx"
+    },
+    "代码备份": {
+      "api_client.py": "26 版 code_to001.py",
+      "app.ipynb": "26 版 code_to002.ipynb",
+      "config.py": "26 版 code_to003.py",
+      "data_processor.py": "26 版 code_to004.py",
+      "database.py": "26 版 code_to005.py",
+      "main.py": "26 版 code_to006.py",
+      "models.py": "26 版 code_to007.py",
+      "requirements.txt": "26 版 code_to008.txt",
+      "test_main.py": "26 版 code_to009.py",
+      "utils.py": "26 版 code_to010.py"
+    },
+    "日常杂物": {
+      "avatar.jpg": "2026 日常之001.jpg",
+      "chart.png": "2026 日常之002.png",
+      "infographic.png": "2026 日常之003.png",
+      "meme.jpg": "2026 日常之004.jpg",
+      "music_playlist.mp3": "2026 日常之005.mp3",
+      "recording.mp3": "2026 日常之006.mp3",
+      "screenshot.png": "2026 日常之007.png",
+      "tutorial.mp4": "2026 日常之008.mp4",
+      "vacation_photo.jpg": "2026 日常之009.jpg",
+      "video_clip.mp4": "2026 日常之010.mp4"
+    }
+  }
+}

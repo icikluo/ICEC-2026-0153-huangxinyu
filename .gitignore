@@ -1,2 +1,6 @@
-﻿# 录屏证据文件超过 GitHub 100MB 限制，仅本地保留
+# 录屏证据文件超过 GitHub 100MB 限制，仅本地保留
 01-Field-Discovery/raw_data/10-task-audit/samples/evidence-task10/screen recording.mp4
+
+# 课题10 AI 条件原始录屏（1.6GB），仅本地保留；入库的是 ai/evidence/AI条件过程录屏-压缩版.mp4（41.8MB）
+01-Field-Discovery/raw_data/10-task-audit/ai/evidence/屏幕录制*.mp4
+01-Field-Discovery/raw_data/10-task-audit/ai/evidence/*原始*.mp4
