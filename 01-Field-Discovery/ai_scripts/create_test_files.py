@@ -4,7 +4,10 @@
 功能：
 1. 创建 3 个测试文件夹
 2. 每个文件夹生成 10 个随机命名的测试文件
-3. 包含多种文件扩展名（.docx, .pdf, .py, .txt, .xlsx, .jpg, .png, .ipynb, .csv, .mp4）
+3. 覆盖 11 种扩展名（.docx/.pdf/.xlsx/.pptx、.py/.ipynb/.txt、.jpg/.png/.mp3/.mp4）
+
+注意：列表内的名字与 `manual_timing_record.md`、`original_file_list.md` 完全一致。
+`batch_rename.py` 会先 files.sort() 再编号，所以实际编号顺序 = 名称升序（列表顺序仅作记录）。
 
 作者：黄心瑜
 日期：2026-10-21
@@ -19,40 +22,40 @@ def create_test_files():
     # 定义 3 个文件夹及其对应的文件类型
     folders_config = {
         '文档资料': [
-            'report_draft.docx',
-            'meeting_notes.docx',
-            'project_plan.pdf',
-            'budget_2026.xlsx',
-            'data_analysis.xlsx',
-            'thesis_outline.docx',
-            'presentation.pptx',
-            'reading_notes.pdf',
             'assignment.docx',
-            'certificate.pdf'
+            'budget_2026.xlsx',
+            'certificate.pdf',
+            'data_analysis.xlsx',
+            'meeting_notes.docx',
+            'presentation.pptx',
+            'project_plan.pdf',
+            'reading_notes.pdf',
+            'report_draft.docx',
+            'thesis_outline.docx'
         ],
         '代码备份': [
-            'main.py',
-            'utils.py',
-            'config.py',
-            'test_main.py',
-            'data_processor.py',
             'api_client.py',
-            'database.py',
-            'models.py',
             'app.ipynb',
-            'requirements.txt'
+            'config.py',
+            'data_processor.py',
+            'database.py',
+            'main.py',
+            'models.py',
+            'requirements.txt',
+            'test_main.py',
+            'utils.py'
         ],
         '日常杂物': [
-            'vacation_photo.jpg',
-            'screenshot.png',
-            'music_playlist.mp3',
-            'video_clip.mp4',
             'avatar.jpg',
+            'chart.png',
             'infographic.png',
-            'recording.mp3',
-            'tutorial.mp4',
             'meme.jpg',
-            'chart.png'
+            'music_playlist.mp3',
+            'recording.mp3',
+            'screenshot.png',
+            'tutorial.mp4',
+            'vacation_photo.jpg',
+            'video_clip.mp4'
         ]
     }
     

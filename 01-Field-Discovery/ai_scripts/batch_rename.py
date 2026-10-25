@@ -167,12 +167,12 @@ def main():
         },
         {
             'folder': '代码备份',
-            'prefix': '26 版 code_to',
+            'prefix': '26版code_to',
             'start_num': 1
         },
         {
             'folder': '日常杂物',
-            'prefix': '2026 日常之',
+            'prefix': '2026日常之',
             'start_num': 1
         }
     ]
