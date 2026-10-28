@@ -4,3 +4,19 @@
 # 课题10 AI 条件原始录屏（1.6GB），仅本地保留；入库的是 ai/evidence/AI条件过程录屏-压缩版.mp4（41.8MB）
 01-Field-Discovery/raw_data/10-task-audit/ai/evidence/屏幕录制*.mp4
 01-Field-Discovery/raw_data/10-task-audit/ai/evidence/*原始*.mp4
+
+# ---- 通用忽略 ----
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+Thumbs.db
+desktop.ini
+.DS_Store
+~$*
+
+# 临时文件
+*.tmp
+*.bak
+*.log
+!**/process_logs/*.log
