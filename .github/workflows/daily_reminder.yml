@@ -1,0 +1,54 @@
+name: Daily Schedule Reminder
+
+on:
+  schedule:
+    # UTC 23:30 = 北京时间次日 07:30
+    - cron: '30 23 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: daily-reminder
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pandas
+
+      - name: Run reminder
+        working-directory: 02-20Days-Challenge
+        env:
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+          SENDER_AUTH_CODE: ${{ secrets.SENDER_AUTH_CODE }}
+          RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
+        run: python main.py
+
+      - name: Commit log
+        if: always()
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add 02-20Days-Challenge/process_logs/
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "chore: update daily log $(TZ=Asia/Shanghai date +%Y-%m-%d)"
+          git push https://x-access-token:${GH_PAT}@github.com/${GITHUB_REPOSITORY}.git HEAD:${GITHUB_REF_NAME}
