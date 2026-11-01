@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-每日课表邮件提醒
-功能：读取 schedule.csv -> 筛选当天课程 -> 通过 QQ 邮箱发送 -> 追加日志
+每日课表邮件提醒 v2（支持周次）
+功能：读取 schedule.csv -> 按周次+星期筛选当天课程 -> QQ 邮箱发送 -> 追加日志
 安全：
-  1. 邮箱与授权码全部来自环境变量，不写死在代码中
-  2. 日志只记录运行元数据（时间/课程数/状态/耗时），不记录课程名、地点、教师
+  1. 邮箱与授权码全部来自环境变量或本地 .env，不写死在代码中
+  2. 日志只记录运行元数据（时间/周次/课程数/状态/耗时），不记录课程名、地点、教师
   3. 日志中邮箱脱敏；报错文本中若意外出现授权码，兜底替换为 ***
 """
 
@@ -13,7 +13,7 @@ import sys
 import time
 import smtplib
 import traceback
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone, timedelta, date
 from email.mime.text import MIMEText
 from email.header import Header
 
@@ -22,8 +22,13 @@ import pandas as pd
 # ===== 路径配置 =====
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CSV_PATH = os.path.join(BASE_DIR, "schedule.csv")
+ENV_PATH = os.path.join(BASE_DIR, ".env")
 LOG_DIR = os.path.join(BASE_DIR, "process_logs")
 LOG_PATH = os.path.join(LOG_DIR, "daily_log.txt")
+
+# ===== 学期配置：第 1 周周一 = 2026-09-07 =====
+SEMESTER_START = date(2026, 9, 7)
+MILITARY_WEEKS = {14, 15}   # 军训周：所有课程停课
 
 # ===== 时间配置：显式使用北京时间，避免云端 UTC 判断错星期 =====
 BJ_TZ = timezone(timedelta(hours=8))
@@ -35,7 +40,7 @@ SMTP_HOST = "smtp.qq.com"
 SMTP_PORT = 465
 SMTP_TIMEOUT = 30
 MAX_RETRY = 2
-REQUIRED_COLS = {"星期", "课程名", "时间", "地点", "教师"}
+REQUIRED_COLS = {"周次", "星期", "课程名", "开始时间", "结束时间", "地点", "教师"}
 
 
 def load_dotenv_file():
@@ -43,10 +48,9 @@ def load_dotenv_file():
     云端 GitHub Actions 不使用 .env，直接通过 Repository Secrets 注入环境变量。
     已存在的环境变量优先，不会被 .env 覆盖。
     """
-    env_path = os.path.join(BASE_DIR, ".env")
-    if not os.path.exists(env_path):
+    if not os.path.exists(ENV_PATH):
         return
-    with open(env_path, "r", encoding="utf-8") as f:
+    with open(ENV_PATH, "r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
             if not line or line.startswith("#") or "=" not in line:
@@ -75,8 +79,34 @@ def sanitize(text, secrets):
     return text
 
 
-def load_today_courses(weekday_name):
-    """读取课表并筛选当天课程；返回 (课程列表, 课表总条数)"""
+def current_week(today):
+    """计算今天是学期第几周"""
+    return (today - SEMESTER_START).days // 7 + 1
+
+
+def parse_weeks(cell):
+    """解析周次表达式：'3;5-13;16-18' -> {3, 5..13, 16..18}"""
+    weeks = set()
+    for token in str(cell).replace("，", ";").replace(",", ";").split(";"):
+        token = token.strip()
+        if not token:
+            continue
+        if "-" in token:
+            a, b = token.split("-", 1)
+            try:
+                weeks.update(range(int(a), int(b) + 1))
+            except ValueError:
+                continue
+        else:
+            try:
+                weeks.add(int(token))
+            except ValueError:
+                continue
+    return weeks
+
+
+def load_today_courses(weekday_name, week_no):
+    """读取课表，筛选当天当周课程；返回 (课程列表, 课表总条数, 是否军训周)"""
     df = pd.read_csv(CSV_PATH, encoding="utf-8-sig", dtype=str)
     df.columns = [c.strip() for c in df.columns]
     for col in df.columns:
@@ -87,19 +117,28 @@ def load_today_courses(weekday_name):
         raise ValueError("schedule.csv 缺少列: %s" % ",".join(sorted(missing)))
 
     total = len(df)
-    today = df[df["星期"] == weekday_name]
-    return today.sort_values("时间").to_dict("records"), total
+
+    if week_no in MILITARY_WEEKS:
+        return [], total, True
+
+    df["_weeks"] = df["周次"].apply(parse_weeks)
+    hit = df[(df["星期"] == weekday_name) & (df["_weeks"].apply(lambda s: week_no in s))]
+    hit = hit.sort_values("开始时间")
+    return hit.to_dict("records"), total, False
 
 
-def build_body(courses, today_str):
-    """生成邮件正文（含课程名、时间、地点、教师）"""
+def build_body(courses, today_str, week_no, is_military):
+    """生成邮件正文"""
+    if is_military:
+        return "军训期间，无课。\n\n日期：%s（第 %d 周）" % (today_str, week_no)
+
     if not courses:
-        return "今天没有课，好好休息。\n\n日期：%s" % today_str
+        return "今天没有课，好好休息。\n\n日期：%s（第 %d 周）" % (today_str, week_no)
 
-    lines = ["今日课表提醒", "日期：%s" % today_str, ""]
+    lines = ["今日课表提醒", "日期：%s（第 %d 周）" % (today_str, week_no), ""]
     for c in courses:
-        lines.append("· %s  %s  %s  教师：%s" % (
-            c["时间"], c["课程名"], c["地点"], c["教师"]))
+        lines.append("· %s-%s  %s  %s  教师：%s" % (
+            c["开始时间"], c["结束时间"], c["课程名"], c["地点"], c["教师"]))
     lines.append("")
     lines.append("共 %d 节课" % len(courses))
     return "\n".join(lines)
@@ -150,6 +189,7 @@ def main():
     today = datetime.now(BJ_TZ)
     today_str = today.strftime("%Y-%m-%d")
     weekday_name = WEEKDAY_MAP[today.weekday()]
+    week_no = current_week(today.date())
 
     sender = os.environ.get("SENDER_EMAIL")
     auth_code = os.environ.get("SENDER_AUTH_CODE")
@@ -163,25 +203,27 @@ def main():
         sys.exit(1)
 
     try:
-        courses, total = load_today_courses(weekday_name)
-        body = build_body(courses, "%s %s" % (today_str, weekday_name))
+        courses, total, is_military = load_today_courses(weekday_name, week_no)
+        body = build_body(courses, "%s %s" % (today_str, weekday_name), week_no, is_military)
         subject = "今日课表提醒 %s" % today_str
 
         ok, err, retry = send_mail(subject, body, sender, auth_code, receiver)
         duration_ms = int((time.time() - start) * 1000)
 
         # 注意：日志只写元数据，不写课程名/地点/教师，保护隐私
+        mode = "军训周" if is_military else "正常"
         if ok:
-            detail = ("星期=%s | 课表总数=%d | 今日课程数=%d | 邮件=SUCCESS | "
-                      "收件人=%s | retry=%d | 耗时=%dms") % (
-                weekday_name, total, len(courses), mask_email(receiver), retry, duration_ms)
+            detail = ("周次=%d | 星期=%s | 模式=%s | 课表总数=%d | 今日课程数=%d | "
+                      "邮件=SUCCESS | 收件人=%s | retry=%d | 耗时=%dms") % (
+                week_no, weekday_name, mode, total, len(courses),
+                mask_email(receiver), retry, duration_ms)
             write_log("SUCCESS", detail)
             print(detail)
         else:
             err = sanitize(err, secrets_to_mask)
-            detail = ("星期=%s | 课表总数=%d | 今日课程数=%d | 邮件=FAILED | "
-                      "retry=%d | 耗时=%dms | error=%s") % (
-                weekday_name, total, len(courses), retry, duration_ms, err)
+            detail = ("周次=%d | 星期=%s | 模式=%s | 课表总数=%d | 今日课程数=%d | "
+                      "邮件=FAILED | retry=%d | 耗时=%dms | error=%s") % (
+                week_no, weekday_name, mode, total, len(courses), retry, duration_ms, err)
             write_log("FAILED", detail)
             print(detail)
             sys.exit(1)
