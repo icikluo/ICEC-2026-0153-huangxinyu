@@ -179,7 +179,17 @@ def write_log(status, detail):
     now = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S %z")
     trigger = os.environ.get("GITHUB_EVENT_NAME", "local")
     line = "%s | trigger=%s | %s | %s\n" % (now, trigger, status, detail)
+
+    # 追加前先检查文件末尾是否为换行符，避免新记录与上一行粘连
+    needs_newline = False
+    if os.path.exists(LOG_PATH) and os.path.getsize(LOG_PATH) > 0:
+        with open(LOG_PATH, "rb") as f:
+            f.seek(-1, os.SEEK_END)
+            needs_newline = f.read(1) != b"\n"
+
     with open(LOG_PATH, "a", encoding="utf-8") as f:
+        if needs_newline:
+            f.write("\n")
         f.write(line)
 
 
