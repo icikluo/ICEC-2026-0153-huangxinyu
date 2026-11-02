@@ -60,7 +60,9 @@ def load_dotenv_file():
 
 
 def mask_email(addr):
-    """邮箱脱敏：3444545380@qq.com -> 3*********@qq.com"""
+    """邮箱脱敏：保留首字母与域名，其余用 * 遮蔽
+    例：abcdefgh@qq.com -> a*******@qq.com
+    """
     if not addr or "@" not in addr:
         return "***"
     name, domain = addr.split("@", 1)
