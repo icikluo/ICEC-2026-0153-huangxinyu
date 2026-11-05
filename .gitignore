@@ -34,3 +34,7 @@ desktop.ini
 build/
 dist/
 *.spec
+
+# 用户版运行时生成的配置（含邮箱与授权码，绝不入库）
+config.json
+**/config.json
