@@ -26,3 +26,11 @@ desktop.ini
 .env.*
 **/.env
 !**/.env.example
+
+# 打包产物（本地保留，不入库）
+课表提醒.exe
+*.exe
+!*.exe.md
+build/
+dist/
+*.spec
