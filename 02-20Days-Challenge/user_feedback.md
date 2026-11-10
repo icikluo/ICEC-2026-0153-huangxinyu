@@ -120,7 +120,7 @@
     - 错误信息：`'utf-8' codec can't decode byte 0xd6` —— 典型的 GBK 编码文件被按 UTF-8 读取
     - 影响：用户遇到报错后需自行排查重试
   - **改进建议 2**：UI 界面美化，提升人性化体验（与用户 1 建议一致）
-- **截图**：`user5-app-error.png`（含 UTF-8 报错的程序界面）
+- **截图**：`user5-app-error.png`（含 UTF-8 报错的程序界面）、`user5-mail.png`（手机端邮件详情，重试后成功送达）
 
 ---
 
