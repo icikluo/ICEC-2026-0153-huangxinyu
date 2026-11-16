@@ -33,7 +33,7 @@
 
 | 类别 | 内容 | 入口 |
 |---|---|---|
-| **主程序** | 每日课表邮件提醒（Python + QQ 邮箱 SMTP + GitHub Actions 定时）| [main.py](02-20Days-Challenge/main.py) ｜ [课表](02-20Days-Challenge/schedule.csv) |
+| **主程序** | 每日课表邮件提醒（Python + QQ 邮箱 SMTP + GitHub Actions 定时）| [main.py](02-20Days-Challenge/main.py) ｜ [课表(可读版)](02-20Days-Challenge/课表.md) ｜ [原始 CSV](02-20Days-Challenge/schedule.csv) |
 | **自动化配置** | 每天北京时间 07:30 自动运行，并自动提交日志 | [daily_reminder.yml](.github/workflows/daily_reminder.yml) |
 | **7 天运行日志** | 连续 7 天定时触发，全部成功 | [daily_log.txt](02-20Days-Challenge/process_logs/daily_log.txt) |
 | **每日检查表** | 逐日核对邮件、日志、Actions 状态 | [checkin.md](02-20Days-Challenge/process_logs/checkin.md) |
@@ -113,6 +113,7 @@ ICEC-2026-0153-huangxinyu/
 │   ├── phase2-plan.md             # 初期方案
 │   ├── main.py                    # 主程序（作者自用版，GitHub Actions 调用）
 │   ├── schedule.csv               # 课表数据（7 列，支持周次表达式）
+│   ├── 课表.md                     # 课表可读版（按星期视图 + 每周验证矩阵）
 │   ├── .env.example               # 密钥模板（真实 .env 不入库）
 │   ├── iterations/                # 迭代记录 iteration-1 ~ 4
 │   ├── process_logs/
