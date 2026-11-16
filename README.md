@@ -40,7 +40,7 @@
 | **每日检查表** | 逐日核对邮件、日志、Actions 状态 | [checkin.md](02-20Days-Challenge/process_logs/checkin.md) |
 | **4 次迭代记录** | 乱码修复 → 周次维度 → 行粘连 → 用户反馈驱动升级 | [iterations/](02-20Days-Challenge/iterations/) |
 | **8 位用户反馈** | 含截图、原话、评分、共性问题分析 | [user_feedback.md](02-20Days-Challenge/user_feedback.md) |
-| **用户版程序** | 图形界面分发版（白色+浅粉果冻风，支持 xlsx/多编码/课前提醒）| [user_edition/](02-20Days-Challenge/user_edition/) |
+| **用户版程序** | 图形界面分发版（白色+浅粉果冻风，支持 xlsx/多编码/课前提醒）| [⬇ 下载 zip 直接用](02-20Days-Challenge/user_edition/课表提醒-v1.1.zip)（40.9 MB）｜ [源码目录](02-20Days-Challenge/user_edition/) |
 | **过程截图** | 运营截图、AI 对话证据、用户使用截图共 33 张 | [screenshots/](02-20Days-Challenge/process_logs/screenshots/) |
 | **方案文档** | 初期规划 | [phase2-plan.md](02-20Days-Challenge/phase2-plan.md) |
 
@@ -130,7 +130,8 @@ ICEC-2026-0153-huangxinyu/
 │   │   ├── jelly.py               # 圆角果冻风格控件库
 │   │   ├── 使用说明.md
 │   │   ├── 课表模板.csv
-│   │   └── v1.1-可执行程序/        # 打包产物（本地保留，不入库）
+│   │   ├── 课表提醒-v1.1.zip       # ⬇ 完整可执行包（下载解压即用）
+│   │   └── v1.1-可执行程序/        # 打包产物解压后的目录（同 zip 内容）
 │   └── user_feedback.md           # 8 位用户反馈汇总
 └── 03-AI-Collaboration/           # 全程 AI 协作与排障记录
     ├── AI排障记录-01 ~ 07.md
