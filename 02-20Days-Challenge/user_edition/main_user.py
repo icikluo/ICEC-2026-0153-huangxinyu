@@ -234,6 +234,69 @@ def build_body(courses, today_str, week_no, is_military):
     return "\n".join(lines)
 
 
+class ScrollableFrame(tk.Frame):
+    """带垂直滚动条的容器（内容超出窗口时可滚动）"""
+
+    def __init__(self, master, bg=C_BG, **kw):
+        super().__init__(master, bg=bg, **kw)
+        self.canvas = tk.Canvas(self, bg=bg, highlightthickness=0, bd=0)
+        self.vbar = tk.Scrollbar(self, orient="vertical", command=self.canvas.yview,
+                                 width=12, bd=0, relief="flat",
+                                 troughcolor=C_PINK_PALE, bg=C_PINK,
+                                 activebackground=C_PINK_DEEP,
+                                 highlightthickness=0)
+        self.canvas.configure(yscrollcommand=self._on_scroll)
+        self.canvas.pack(side="left", fill="both", expand=True)
+        self._vbar_visible = False
+
+        self.inner = tk.Frame(self.canvas, bg=bg)
+        self._win = self.canvas.create_window(0, 0, window=self.inner, anchor="nw")
+
+        self.inner.bind("<Configure>", self._on_inner_config)
+        self.canvas.bind("<Configure>", self._on_canvas_config)
+
+        # 鼠标滚轮
+        self.canvas.bind("<Enter>", self._bind_wheel)
+        self.canvas.bind("<Leave>", self._unbind_wheel)
+        self.inner.bind("<Enter>", self._bind_wheel)
+        self.inner.bind("<Leave>", self._unbind_wheel)
+
+    # ---- 事件 ----
+    def _on_inner_config(self, event=None):
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        self._update_scrollbar()
+
+    def _on_canvas_config(self, event):
+        self.canvas.itemconfig(self._win, width=event.width)
+        self._update_scrollbar()
+
+    def _update_scrollbar(self):
+        need = self.inner.winfo_reqheight() > self.canvas.winfo_height()
+        if need and not self._vbar_visible:
+            self.vbar.pack(side="right", fill="y")
+            self._vbar_visible = True
+        elif not need and self._vbar_visible:
+            self.vbar.pack_forget()
+            self._vbar_visible = False
+
+    def _on_scroll(self, first, last):
+        self.vbar.set(first, last)
+
+    def _bind_wheel(self, _=None):
+        self.canvas.bind_all("<MouseWheel>", self._on_wheel)
+
+    def _unbind_wheel(self, _=None):
+        self.canvas.unbind_all("<MouseWheel>")
+
+    def _on_wheel(self, event):
+        if self.inner.winfo_reqheight() <= self.canvas.winfo_height():
+            return
+        self.canvas.yview_scroll(int(-event.delta / 120), "units")
+
+    def scroll_to_top(self):
+        self.canvas.yview_moveto(0)
+
+
 HELP_TEXT = [
     ("▍快速上手（三步）", "h"),
     ("1. 「① 邮箱配置」填写你的 QQ 邮箱、授权码、收件邮箱，点保存。", None),
@@ -279,8 +342,8 @@ class App(tk.Tk):
         self.cfg = load_config()
         self.df = None
         self.title("%s %s  ·  %s" % (APP_NAME, APP_VERSION, APP_AUTHOR))
-        self.geometry("900x700")
-        self.minsize(860, 640)
+        self.geometry("980x800")
+        self.minsize(940, 720)
         self.configure(bg=C_BG)
         self._build()
         self._load_to_ui()
@@ -291,12 +354,18 @@ class App(tk.Tk):
         self._build_header()
         self._build_status()
         self._build_nav()
-        self.body = tk.Frame(self, bg=C_BG)
-        self.body.pack(fill="both", expand=True, padx=28, pady=(12, 16))
+        # 可滚动内容区
+        self.scroller = ScrollableFrame(self, bg=C_BG)
+        self.scroller.pack(fill="both", expand=True, padx=28, pady=(12, 16))
+        self.body = self.scroller.inner
         self.pages = [self._page_mail(), self._page_sched(), self._page_send(), self._page_help()]
         for p in self.pages:
-            p.place(relx=0, rely=0, relwidth=1, relheight=1)
-        self.pages[0].lift()
+            p.pack(fill="both", expand=True)
+        self.pages[0].pack_forget()
+        self.pages[1].pack_forget()
+        self.pages[2].pack_forget()
+        self.pages[3].pack_forget()
+        self.pages[0].pack(fill="both", expand=True)
 
     def _build_header(self):
         head = tk.Canvas(self, height=92, bg=C_BG, highlightthickness=0, bd=0)
@@ -309,13 +378,15 @@ class App(tk.Tk):
                 head.create_line(0, i, w, i, fill=J.lerp("#FFF1F6", "#FFFFFF", i / 91))
             head.create_oval(w - 160, -70, w - 20, 70, fill="#FFEDF3", outline="")
             head.create_oval(w - 96, 8, w - 24, 80, fill="#FFE2EC", outline="")
-            # 左侧圆角图标块（先画底块，再画文字）
-            J.rrect(head, 22, 20, 70, 68, 14, fill=C_PINK)
-            head.create_text(46, 46, text="课", fill="#FFFFFF",
-                             font=("Microsoft YaHei UI", 17, "bold"))
-            head.create_text(88, 32, text="%s %s" % (APP_NAME, APP_VERSION), fill=C_TEXT,
+            # 左侧圆角图标块（垂直居中于 92 高标题栏）
+            box_top, box_bottom = 20, 72
+            J.rrect(head, 22, box_top, 74, box_bottom, 15, fill=C_PINK)
+            head.create_text(48, (box_top + box_bottom) / 2, text="课", fill="#FFFFFF",
+                             font=("Microsoft YaHei UI", 18, "bold"))
+            # 标题 + 副标题（与图标块垂直居中）
+            head.create_text(90, 40, text="%s %s" % (APP_NAME, APP_VERSION), fill=C_TEXT,
                              font=("Microsoft YaHei UI", 18, "bold"), anchor="w")
-            head.create_text(90, 62, text="每天自动把当天课表发到你邮箱", fill=C_TEXT_MUTED,
+            head.create_text(92, 64, text="每天自动把当天课表发到你邮箱", fill=C_TEXT_MUTED,
                              font=("Microsoft YaHei UI", 10), anchor="w")
 
         head.bind("<Configure>", draw)
@@ -336,7 +407,12 @@ class App(tk.Tk):
         self.seg.pack(fill="x")
 
     def _switch(self, i):
-        self.pages[i].lift()
+        for j, p in enumerate(self.pages):
+            if j == i:
+                p.pack(fill="both", expand=True)
+            else:
+                p.pack_forget()
+        self.scroller.scroll_to_top()
 
     # ---------- 状态条 ----------
     def refresh_status(self):
